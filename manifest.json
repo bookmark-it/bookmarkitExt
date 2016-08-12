@@ -21,7 +21,10 @@
     "default_icon": "icons/icon19.png",
     "default_title": "BookmarkIt!"
   },
-  "options_page": "src/options/options.html",
+  "options_ui": {
+    "page": "src/options/options.html",
+    "chrome_style": true
+  },
   "permissions": [
     "activeTab",
     "tabs",
