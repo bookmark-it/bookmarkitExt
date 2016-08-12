@@ -16,13 +16,27 @@ function addBookmark (tab, token) {
           "Authorization": "Token " + token
         },
         success: function (result) {
-          console.log('result', result);
+          injectSaveBookmark();
         },
         error: function(error) {
           console.log('error', error);
         }
 	});
 };
+
+function injectSaveBookmark() {
+  chrome.tabs.executeScript(null, { file: "js/jquery/jquery.min.js" }, function() {
+    chrome.tabs.insertCSS(null, { file: "src/inject/styles.css" });
+    chrome.tabs.executeScript(null, { file: "src/inject/save_bookmark.js" });
+  });
+}
+
+function injectLogin() {
+  chrome.tabs.executeScript(null, { file: "js/jquery/jquery.min.js" }, function() {
+    chrome.tabs.insertCSS(null, { file: "src/inject/styles.css" });
+    chrome.tabs.executeScript(null, { file: "src/inject/login.js" });
+  });
+}
 
 //example of using a message handler from the inject scripts
 chrome.runtime.onMessage.addListener(
@@ -42,15 +56,9 @@ chrome.runtime.onMessage.addListener(
 			if (token && token['bk-it_token']) {
 				// save bookmark
 				//on success
-				chrome.tabs.executeScript(null, { file: "js/jquery/jquery.min.js" }, function() {
-					chrome.tabs.insertCSS(null, { file: "src/inject/save_bookmark.css" });
-				  chrome.tabs.executeScript(null, { file: "src/inject/save_bookmark.js" });
-				});
+				injectSaveBookmark();
 			} else {
-				chrome.tabs.executeScript(null, { file: "js/jquery/jquery.min.js" }, function() {
-					chrome.tabs.insertCSS(null, { file: "src/inject/login.css" });
-					chrome.tabs.executeScript(null, { file: "src/inject/login.js" });
-				});
+        injectLogin();
 			}
 		});
 	});
