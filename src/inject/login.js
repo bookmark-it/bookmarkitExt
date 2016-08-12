@@ -7,6 +7,10 @@ var login_url = "//bk-it.herokuapp.com/auth/login/",
       '</form>' +
     '</div>';
 
+function destroyPopup() {
+  $('#bkit').remove();
+}
+
 $('body').append(template);
 
 $('#bkit form').submit(function(e){
@@ -17,9 +21,12 @@ $('#bkit form').submit(function(e){
   }
   console.log('data bef', data );
   $.post(login_url, data, function( response ) {
-    console.log(response);
     chrome.runtime.sendMessage({
       'bk-it_token': response.auth_token
+    }, function(response) {
+      if (response.done === true) {
+        destroyPopup();
+      }
     });
   });
 })

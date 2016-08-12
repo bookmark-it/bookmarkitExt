@@ -33,6 +33,7 @@ chrome.runtime.onMessage.addListener(
 			}, function() {
         addBookmark(sender.tab, request['bk-it_token']);
       });
+      sendResponse({done: true});
 		}
   });
 
