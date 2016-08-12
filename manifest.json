@@ -21,6 +21,7 @@
     "default_icon": "icons/icon19.png",
     "default_title": "BookmarkIt!"
   },
+  "options_page": "src/options/options.html",
   "permissions": [
     "activeTab",
     "tabs",
