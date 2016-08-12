@@ -19,7 +19,6 @@ $('#bkit form').submit(function(e){
     username: $(this).find('[name=username]').val(),
     password: $(this).find('[name=password]').val(),
   }
-  console.log('data bef', data );
   $.post(login_url, data, function( response ) {
     chrome.runtime.sendMessage({
       'bk-it_token': response.auth_token
