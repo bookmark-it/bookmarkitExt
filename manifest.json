@@ -1,6 +1,6 @@
 {
   "name": "BookmarkIt",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "Add bookmarks to bk-it.herokuapp.com",
   "homepage_url": "https://github.com/julienR2",
