@@ -42,7 +42,7 @@ function injectLogin() {
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
   	if (request['bk-it_token']) {
-			chrome.storage.sync.set({
+			chrome.storage.local.set({
 				'bk-it_token': request['bk-it_token']
 			}, function() {
         addBookmark(sender.tab, request['bk-it_token']);
@@ -52,7 +52,7 @@ chrome.runtime.onMessage.addListener(
   });
 
 	chrome.browserAction.onClicked.addListener(function(tab) {
-		chrome.storage.sync.get('bk-it_token', function(token) {
+		chrome.storage.local.get('bk-it_token', function(token) {
 			if (token && token['bk-it_token']) {
 				// save bookmark
 				//on success

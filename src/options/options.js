@@ -1,5 +1,5 @@
 function logout() {
-  chrome.storage.sync.remove('bk-it_token');
+  chrome.storage.local.remove('bk-it_token');
 }
 
 function disableLogout() {
@@ -11,7 +11,7 @@ $('#logout').click(function(){
   disableLogout();
 })
 
-chrome.storage.sync.get('bk-it_token', function(token) {
+chrome.storage.local.get('bk-it_token', function(token) {
   if (!token['bk-it_token']) {
     disableLogout();
   }
