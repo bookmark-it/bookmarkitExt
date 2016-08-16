@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(
 			if (token && token['bk-it_token']) {
 				// save bookmark
 				//on success
-				injectSaveBookmark();
+				addBookmark(tab, token['bk-it_token'])
 			} else {
         injectLogin();
 			}
