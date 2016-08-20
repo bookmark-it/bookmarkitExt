@@ -1,4 +1,5 @@
 var template = '<div id="bkit">' +
+      '<button id="close">Close</button>' +
       '<h1>Bookmark Saved !</h1>' +
       '<form id="category">' +
         'Enter a category: <input type="text" name="category"><br>' +
@@ -8,9 +9,13 @@ var template = '<div id="bkit">' +
       '</ul>'+
     '</div>',
     bookmark = null,
-    sending = false;
+    sending = false,
+    timeOut = setTimeout(destroyPopup, 3000);
+
+$('body').append(template);
 
 function destroyPopup() {
+  clearTimeout(timeOut);
   $('#bkit').remove();
 }
 
@@ -24,8 +29,6 @@ function showCategories(categories) {
   })
   $('#bkit #categories').html(categoryList);
 }
-
-$('body').append(template);
 
 $('#bkit #category').submit(function(e) {
   e.preventDefault();
@@ -57,6 +60,18 @@ $("#bkit #categories").on('click', 'li button', function(e) {
   }
 })
 
+$("#bkit #close").click(function() {
+  destroyPopup();
+});
+
+$("#bkit").mouseenter(function(){
+  clearTimeout(timeOut);
+})
+
+$("#bkit").mouseleave(function(){
+  timeOut = setTimeout(destroyPopup, 3000);
+})
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.bookmark) {
@@ -65,5 +80,3 @@ chrome.runtime.onMessage.addListener(
       showCategories(bookmark.categories);
     }
   });
-
-// setTimeout(destroyPopup, 2000);

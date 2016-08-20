@@ -6,3 +6,6 @@
   background-color: #FFF;
   z-index: 99999;
 }
+#bkit #close {
+  float: right;
+}
