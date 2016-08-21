@@ -1,82 +1,88 @@
-var template = '<div id="bkit">' +
-      '<button id="close">Close</button>' +
-      '<h1>Bookmark Saved !</h1>' +
-      '<form id="category">' +
-        'Enter a category: <input type="text" name="category"><br>' +
-        '<input type="submit" value="Submit">' +
-      '</form>' +
-      '<ul id="categories">'+
-      '</ul>'+
-    '</div>',
-    bookmark = null,
-    sending = false,
-    timeOut = setTimeout(destroyPopup, 3000);
-
-$('body').append(template);
-
-function destroyPopup() {
-  clearTimeout(timeOut);
-  $('#bkit').remove();
+function getTemplate(url) {
+  return new Promise(function(resolve, reject) {
+      $.ajax({
+          type: "GET",
+          url: chrome.extension.getURL(url),
+          success: resolve
+      });
+  })
 }
 
-function showCategories(categories) {
-  var categoryList = "";
-  $.each(categories, function(index, category) {
-    categoryList += '<li>' +
+getTemplate('templates/save_bookmark.html')
+  .then(function(html) {
+    var el = $(html);
+    $('body').append(el);
+    main();
+  });
+
+function main() {
+  var bookmark = null,
+      sending = false,
+      timeOut = setTimeout(destroyPopup, 3000);
+
+  function destroyPopup() {
+    clearTimeout(timeOut);
+    $('#bkit').remove();
+  }
+
+  function showCategories(categories) {
+    var categoryList = "";
+    $.each(categories, function(index, category) {
+      categoryList += '<li>' +
       category.name +
       '<button id="'+ category.id + '" type="button">x</button>' +
       '</li>';
-  })
-  $('#bkit #categories').html(categoryList);
-}
+    })
+    $('#bkit #categories').html(categoryList);
+  }
 
-$('#bkit #category').submit(function(e) {
-  e.preventDefault();
-  var newCat = $('input[name=category]').val();
-  if (newCat)
-  bookmark.categories.push({
-    name: newCat
-  })
-  sending = true;
-  chrome.runtime.sendMessage({
-    'update': bookmark
-  });
-})
-
-$("#bkit #categories").on('click', 'li button', function(e) {
-  var $elt = $(e.currentTarget),
-      id = +$elt.attr('id'),
-      indexToDel = null;
-  $.each(bookmark.categories, function(index, category) {
-    if (category.id === id) {
-      indexToDel = index;
-    }
-  })
-  if (indexToDel !== null) {
-    bookmark.categories.splice(indexToDel, 1);
+  $('#bkit #category').submit(function(e) {
+    e.preventDefault();
+    var newCat = $('input[name=category]').val();
+    if (newCat)
+    bookmark.categories.push({
+      name: newCat
+    })
+    sending = true;
     chrome.runtime.sendMessage({
       'update': bookmark
     });
-  }
-})
+  })
 
-$("#bkit #close").click(function() {
-  destroyPopup();
-});
+  $("#bkit #categories").on('click', 'li button', function(e) {
+    var $elt = $(e.currentTarget),
+    id = +$elt.attr('id'),
+    indexToDel = null;
+    $.each(bookmark.categories, function(index, category) {
+      if (category.id === id) {
+        indexToDel = index;
+      }
+    })
+    if (indexToDel !== null) {
+      bookmark.categories.splice(indexToDel, 1);
+      chrome.runtime.sendMessage({
+        'update': bookmark
+      });
+    }
+  })
 
-$("#bkit").mouseenter(function(){
-  clearTimeout(timeOut);
-})
+  $("#bkit #close").click(function() {
+    destroyPopup();
+  });
 
-$("#bkit").mouseleave(function(){
-  timeOut = setTimeout(destroyPopup, 3000);
-})
+  $("#bkit").mouseenter(function(){
+    clearTimeout(timeOut);
+  })
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+  $("#bkit").mouseleave(function(){
+    timeOut = setTimeout(destroyPopup, 3000);
+  })
+
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.bookmark) {
       sending = false;
       bookmark = request.bookmark;
       showCategories(bookmark.categories);
     }
   });
+}
