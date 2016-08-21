@@ -49,7 +49,7 @@ function updateBookmark (tab, bookmark) {
 
 function injectSaveBookmark(tabId, bookmark) {
   chrome.tabs.executeScript(tabId, { file: "js/jquery/jquery.min.js" }, function() {
-    chrome.tabs.insertCSS(tabId, { file: "src/inject/styles.css" });
+    chrome.tabs.insertCSS(tabId, { file: "css/styles.css" });
     chrome.tabs.executeScript(tabId, { file: "src/inject/save_bookmark.js" }, function() {
 			chrome.tabs.sendMessage(tabId, {bookmark: bookmark})
 		});
@@ -58,7 +58,7 @@ function injectSaveBookmark(tabId, bookmark) {
 
 function injectLogin() {
   chrome.tabs.executeScript(null, { file: "js/jquery/jquery.min.js" }, function() {
-    chrome.tabs.insertCSS(null, { file: "src/inject/styles.css" });
+    chrome.tabs.insertCSS(null, { file: "css/styles.css" });
     chrome.tabs.executeScript(null, { file: "src/inject/login.js" });
   });
 }
