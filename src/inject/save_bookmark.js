@@ -39,10 +39,11 @@ function main() {
   $('#bkit #category').submit(function(e) {
     e.preventDefault();
     var newCat = $('input[name=category]').val();
-    if (newCat)
-    bookmark.categories.push({
-      name: newCat
-    })
+    if (newCat){
+      bookmark.categories.push({
+        name: newCat
+      })
+    }
     sending = true;
     chrome.runtime.sendMessage({
       'update': bookmark

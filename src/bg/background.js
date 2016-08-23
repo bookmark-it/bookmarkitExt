@@ -1,4 +1,26 @@
-var api_url = "http://bk-it.herokuapp.com/api/";
+var api_url = "http://bk-it.herokuapp.com/api/",
+		search_url = "http://bk-it.herokuapp.com/bookmarks/search/";
+
+function searchBookmark (tab, token) {
+	$.ajax({
+		url: search_url,
+		contentType: "application/json; charset=utf-8",
+		data: {
+			"query": tab.url
+		},
+		headers: {
+			"Authorization": "Token " + token
+		},
+		success: function (result) {
+			if (result.length > 0) {
+				injectSaveBookmark(tab.id, result[0]);
+			}
+		},
+		error: function(error) {
+			console.log('error');
+		}
+	});
+}
 
 function addBookmark (tab, token) {
 	$.ajax({
@@ -19,7 +41,7 @@ function addBookmark (tab, token) {
           injectSaveBookmark(tab.id, result);
         },
         error: function(error) {
-          console.log('error', error);
+          searchBookmark(tab, token);
         }
 	});
 };
