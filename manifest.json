@@ -1,6 +1,6 @@
 {
   "name": "BookmarkIt",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "manifest_version": 2,
   "description": "Add bookmarks to bk-it.herokuapp.com",
   "homepage_url": "https://github.com/julienR2",
@@ -23,7 +23,7 @@
     "persistent": true
   },
   "web_accessible_resources": [
-    "templates/*"
+    "templates/*",
   ],
   "browser_action": {
     "default_icon": "icons/icon19.png",
