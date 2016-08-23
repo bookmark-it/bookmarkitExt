@@ -23,7 +23,7 @@
     "persistent": true
   },
   "web_accessible_resources": [
-    "templates/*",
+    "templates/*"
   ],
   "browser_action": {
     "default_icon": "icons/icon19.png",
