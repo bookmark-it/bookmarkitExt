@@ -70,7 +70,7 @@ function updateBookmark (tab, bookmark) {
 };
 
 function injectSaveBookmark(tabId, bookmark) {
-  chrome.tabs.executeScript(tabId, { file: "js/jquery/jquery.min.js" }, function() {
+  chrome.tabs.executeScript(tabId, { file: "js/jquery.min.js" }, function() {
     chrome.tabs.insertCSS(tabId, { file: "css/styles.css" });
     chrome.tabs.executeScript(tabId, { file: "src/inject/save_bookmark.js" }, function() {
 			chrome.tabs.sendMessage(tabId, {bookmark: bookmark})
@@ -79,9 +79,9 @@ function injectSaveBookmark(tabId, bookmark) {
 }
 
 function injectLogin() {
-  chrome.tabs.executeScript(null, { file: "js/jquery/jquery.min.js" }, function() {
-    chrome.tabs.insertCSS(null, { file: "css/styles.css" });
-    chrome.tabs.executeScript(null, { file: "src/inject/login.js" });
+  chrome.tabs.executeScript(null, { file: "/js/jquery.min.js" }, function() {
+    chrome.tabs.insertCSS(null, { file: "/css/styles.css" });
+    chrome.tabs.executeScript(null, { file: "/src/inject/login.js" });
   });
 }
 
@@ -104,10 +104,7 @@ chrome.runtime.onMessage.addListener(
 chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.storage.local.get('bk-it_token', function(token) {
       if (token && token['bk-it_token']) {
-          // save bookmark
-          //on success
           addBookmark(tab, token['bk-it_token'])
-              // injectSaveBookmark();
       } else {
           injectLogin();
       }
