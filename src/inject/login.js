@@ -1,36 +1,39 @@
-function getTemplate(url) {
-  return new Promise(function(resolve, reject) {
+chrome.runtime.sendMessage({}, function(response) {
+  var readyStateCheckInterval = setInterval(function() {
+    if (document.readyState === "complete") {
+      clearInterval(readyStateCheckInterval);
+
+      // ----------------------------------------------------------
+      // This part of the script triggers when page is done loading
       $.ajax({
-          type: "GET",
-          url: chrome.extension.getURL(url),
-          success: resolve
-      });
-  })
-}
+          url: chrome.extension.getURL('templates/login.html'),
+          dataType: 'html'
+        })
+        .done(function(html) {
+          var el = $(html);
+          $('body').append(el);
+          main();
+        });
+      // ----------------------------------------------------------
 
-getTemplate('templates/login.html')
-  .then(function(html) {
-    var el = $(html);
-    $('body').append(el);
-    main();
-  });
+    }
+  }, 10);
+});
 
-function main () {
-  var login_url = "//bk-it.herokuapp.com/auth/login/";
+function main() {
+  var login_url = "//bk-it.herokuapp.com/api/auth/login/";
 
   function destroyPopup() {
     $('#bkit').remove();
   }
 
-  $('body').append(template);
-
-  $('#bkit form').submit(function(e){
+  $('#bkit form').submit(function(e) {
     e.preventDefault();
     var data = {
       username: $(this).find('[name=username]').val(),
       password: $(this).find('[name=password]').val(),
     }
-    $.post(login_url, data, function( response ) {
+    $.post(login_url, data, function(response) {
       chrome.runtime.sendMessage({
         'bk-it_token': response.auth_token
       }, function(response) {

@@ -1,19 +1,24 @@
-function getTemplate(url) {
-  return new Promise(function(resolve, reject) {
-      $.ajax({
-          type: "GET",
-          url: chrome.extension.getURL(url),
-          success: resolve
-      });
-  })
-}
+chrome.runtime.sendMessage({}, function(response) {
+  var readyStateCheckInterval = setInterval(function() {
+    if (document.readyState === "complete") {
+      clearInterval(readyStateCheckInterval);
 
-getTemplate('templates/save_bookmark.html')
-  .then(function(html) {
-    var el = $(html);
-    $('body').append(el);
-    main();
-  });
+      // ----------------------------------------------------------
+      // This part of the script triggers when page is done loading
+      $.ajax({
+          url: chrome.extension.getURL('templates/save_bookmark.html'),
+          dataType: 'html'
+        })
+        .done(function(html) {
+          var el = $(html);
+          $('body').append(el);
+          main();
+        });
+      // ----------------------------------------------------------
+
+    }
+  }, 10);
+});
 
 function main() {
   var bookmark = null,
