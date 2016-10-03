@@ -1,23 +1,26 @@
 if (!store.enabled) {
-    alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
-    return
-  }
+  alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
 }
 
 //example of using a message handler from the inject scripts
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.login) {
+    console.log('request.data', request.data);
+    chrome.tabs.sendMessage(sender.tab.id, { logged: true, bookmark: "yoooo"});
+  }
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
 	if (store.get('bk-it_token')) {
-		injectWrapper(null, '/src/inject/login.js');
+	   bookmarkFlow(tab);
 	} else {
-		injectWrapper(null, '/src/inject/login.js');
+    loginFlow(tab);
 	}
 });
 
 function bookmarkFlow(tab) {
 	injectWrapper(tab.id, '/src/inject/bookmark.js');
+
 	addBookmark(tab)
 	// if success, send the bookmark to the popin
 	.done(function(result) {

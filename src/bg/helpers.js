@@ -1,11 +1,12 @@
 function injectWrapper(tabId, file, data) {
-  chrome.tabs.insertCSS(tabId, { file: "/css/styles.css" });
-  chrome.tabs.insertCSS(tabId, { file: "/css/material.css" });
-  // chrome.tabs.insertCSS(tabId, { file: "/css/reset.css" });
-  chrome.tabs.executeScript(tabId, { file: "/js/jquery.min.js" }, function() {
-    chrome.tabs.executeScript(tabId, { file: "/js/material.min.js" }, function() {
-      chrome.tabs.executeScript(tabId, { file: "/js/hogan.min.js" }, function() {
-        chrome.tabs.executeScript(tabId, { file: file });
+  chrome.tabs.insertCSS(tabId, { file: "/css/material.css" }, function() {
+    chrome.tabs.insertCSS(tabId, { file: "/css/styles.css" }, function() {
+      chrome.tabs.executeScript(tabId, { file: "/js/jquery.min.js" }, function() {
+        chrome.tabs.executeScript(tabId, { file: "/js/material.min.js" }, function() {
+          chrome.tabs.executeScript(tabId, { file: "/js/hogan.min.js" }, function() {
+            chrome.tabs.executeScript(tabId, { file: file });
+          });
+        });
       });
     });
   });

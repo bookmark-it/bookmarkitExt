@@ -1,3 +1,31 @@
+var template = '',
+    state = {
+      loading: false,
+      username: '',
+      password: ''
+    },
+    root = $('#bkit');
+
+function renderTemplate() {
+  console.log('root.length', root.length);
+  if (root.length) {
+    root.replaceWith(template.render(state));
+  } else {
+    $('body').append(template.render(state));
+    root = $('#bkit');
+  }
+
+  componentHandler.upgradeDom();
+}
+
+function updateState(key, value) {
+  if (state.hasOwnProperty(key)) {
+    state[key] = value;
+
+    renderTemplate();
+  }
+}
+
 chrome.runtime.sendMessage({}, function(response) {
   var readyStateCheckInterval = setInterval(function() {
     if (document.readyState === "complete") {
@@ -10,9 +38,11 @@ chrome.runtime.sendMessage({}, function(response) {
           dataType: 'html'
         })
         .done(function(html) {
-          var el = $(html);
-          $('body').append(el);
-          main();
+          template = Hogan.compile(html);
+
+          renderTemplate();
+
+          loginMain();
         });
       // ----------------------------------------------------------
 
@@ -20,27 +50,25 @@ chrome.runtime.sendMessage({}, function(response) {
   }, 10);
 });
 
-function main() {
-  var login_url = "//bk-it.herokuapp.com/api/auth/login/";
-
-  function destroyPopup() {
-    $('#bkit').remove();
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.logged) {
+    console.log('request.bookmark', request.bookmark);
   }
+});
 
+function loginMain() {
   $('#bkit form').submit(function(e) {
     e.preventDefault();
+
+    state.username = $(this).find('[name=username]').val();
+    state.password = $(this).find('[name=password]').val();
+
     var data = {
-      username: $(this).find('[name=username]').val(),
-      password: $(this).find('[name=password]').val(),
+      username: state.username,
+      password: state.password,
     }
-    $.post(login_url, data, function(response) {
-      chrome.runtime.sendMessage({
-        'bk-it_token': response.auth_token
-      }, function(response) {
-        if (response.done === true) {
-          destroyPopup();
-        }
-      });
-    });
-  })
+
+    updateState('loading', true);
+    chrome.runtime.sendMessage({ login: true, data: data });
+  });
 }
