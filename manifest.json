@@ -18,6 +18,9 @@
   "background": {
     "scripts": [
       "js/jquery.min.js",
+      "js/store.min.js",
+      "src/bg/helpers.js",
+      "src/bg/api.js",
       "src/bg/background.js"
     ],
     "persistent": true
