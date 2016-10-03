@@ -7,8 +7,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.login) {
     login(request.data)
     .done(function(result) {
-      console.log('result', result);
-      chrome.tabs.sendMessage(sender.tab.id, { logged: true });
+      setAuthentication(result.auth_token);
+      bookmarkFlow(sender.tab);
     })
   }
 });
@@ -21,21 +21,32 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 	}
 });
 
+function setAuthentication(token) {
+  store.set('bk-it_token', token);
+}
+
 function bookmarkFlow(tab) {
 	injectWrapper(tab.id, '/src/inject/bookmark.js');
-
-	addBookmark(tab)
+  console.log('tab', tab);
+	addBookmark({
+    "title": tab.title,
+    "url": tab.url,
+    "categories": [],
+    "keywords": []
+  })
 	// if success, send the bookmark to the popin
 	.done(function(result) {
-		chrome.tabs.sendMessage(tabId, {bookmark: result});
+    console.log('result', result);
+		chrome.tabs.sendMessage(tab.id, {bookmark: true, data: result});
 	})
-	.fail(function() {
+	.fail(function(error) {
+    console.log('error', error);
 		// if error, send the error to the popin
 		// if exists, send the bookmark info to the popin
-		searchBookmark(url)
-		.then(function(result){
-			chrome.tabs.sendMessage(tabId, {bookmark: result});
-		})
+		searchBookmark(tab.url)
+  	.then(function(result){
+  		chrome.tabs.sendMessage(tab.id, {bookmark: true, data: result});
+  	})
 	})
 }
 

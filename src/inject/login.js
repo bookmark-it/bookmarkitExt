@@ -10,6 +10,12 @@ function render() {
   bkit_renderTemplate(root, template, state);
 }
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.logged) {
+    state['loading'] =  false;
+  }
+});
+
 chrome.runtime.sendMessage({}, function(response) {
   var readyStateCheckInterval = setInterval(function() {
     if (document.readyState === "complete") {
@@ -20,7 +26,7 @@ chrome.runtime.sendMessage({}, function(response) {
       root = bkit_init();
 
       $.ajax({
-          url: chrome.extension.getURL('templates/login.html'),
+          url: chrome.extension.getURL('/templates/login.html'),
           dataType: 'html'
         })
         .done(function(html) {
@@ -34,12 +40,6 @@ chrome.runtime.sendMessage({}, function(response) {
 
     }
   }, 10);
-});
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.logged) {
-    state['loading'] =  false;
-  }
 });
 
 function loginMain() {

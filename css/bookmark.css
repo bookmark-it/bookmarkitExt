@@ -1,0 +1,10 @@
+#bkit .bookmark.loading {
+  display: block;
+  text-align: center;
+}
+
+#bkit .bookmark .mdl-spinner {
+  width: 100px;
+  height: 100px;
+  margin-top: 45px;
+}

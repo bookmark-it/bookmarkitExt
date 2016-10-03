@@ -1,5 +1,5 @@
 function logout() {
-  chrome.storage.local.remove('bk-it_token');
+  store.remove('bk-it_token');
 }
 
 function disableLogout() {
