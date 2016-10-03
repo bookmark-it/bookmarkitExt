@@ -4,26 +4,10 @@ var template = '',
       username: '',
       password: ''
     },
-    root = $('#bkit');
+    root = null;
 
-function renderTemplate() {
-  console.log('root.length', root.length);
-  if (root.length) {
-    root.replaceWith(template.render(state));
-  } else {
-    $('body').append(template.render(state));
-    root = $('#bkit');
-  }
-
-  componentHandler.upgradeDom();
-}
-
-function updateState(key, value) {
-  if (state.hasOwnProperty(key)) {
-    state[key] = value;
-
-    renderTemplate();
-  }
+function render() {
+  bkit_renderTemplate(root, template, state);
 }
 
 chrome.runtime.sendMessage({}, function(response) {
@@ -33,6 +17,8 @@ chrome.runtime.sendMessage({}, function(response) {
 
       // ----------------------------------------------------------
       // This part of the script triggers when page is done loading
+      root = bkit_init();
+
       $.ajax({
           url: chrome.extension.getURL('templates/login.html'),
           dataType: 'html'
@@ -40,7 +26,7 @@ chrome.runtime.sendMessage({}, function(response) {
         .done(function(html) {
           template = Hogan.compile(html);
 
-          renderTemplate();
+          render();
 
           loginMain();
         });
@@ -52,7 +38,7 @@ chrome.runtime.sendMessage({}, function(response) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.logged) {
-    console.log('request.bookmark', request.bookmark);
+    state['loading'] =  false;
   }
 });
 
@@ -68,7 +54,9 @@ function loginMain() {
       password: state.password,
     }
 
-    updateState('loading', true);
+    state['loading'] =  true;
+    render();
+
     chrome.runtime.sendMessage({ login: true, data: data });
   });
 }

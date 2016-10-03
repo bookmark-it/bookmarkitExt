@@ -4,7 +4,7 @@ var api_url = "http://bk-it.herokuapp.com/api",
     login_url = api_url + "/auth/login/";
 
 function searchBookmark (url) {
-	request({
+	return request({
 		url: search_url,
 		data: {
 			"query": url
@@ -21,16 +21,25 @@ function addBookmark (data) {
 };
 
 function updateBookmark (bookmark) {
-  request({
+  return request({
     url: bookmarks_url + '/' + bookmark.id,
-    type: "put",
+    type: "PUT",
     data: JSON.stringify(bookmark)
   });
 };
 
 function deleteBookmark (bookmark) {
-  request({
+  return request({
     url: bookmarks_url + '/' + bookmark.id,
-    type: "delete"
+    type: "DELETE"
+  });
+};
+
+function login (data) {
+  return request({
+    url: login_url,
+    type: "POST",
+    data: JSON.stringify(data),
+		noToken: true
   });
 };

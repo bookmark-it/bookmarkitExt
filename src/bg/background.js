@@ -5,8 +5,11 @@ if (!store.enabled) {
 //example of using a message handler from the inject scripts
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.login) {
-    console.log('request.data', request.data);
-    chrome.tabs.sendMessage(sender.tab.id, { logged: true, bookmark: "yoooo"});
+    login(request.data)
+    .done(function(result) {
+      console.log('result', result);
+      chrome.tabs.sendMessage(sender.tab.id, { logged: true });
+    })
   }
 });
 
