@@ -385,7 +385,7 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-#bkit {
+html {
   color: rgba(0,0,0, 0.87);
   font-size: 1em;
   line-height: 1.4; }
@@ -407,7 +407,7 @@
 /*
  * A better looking default horizontal rule
  */
-#bkit hr {
+hr {
   display: block;
   height: 1px;
   border: 0;
@@ -420,18 +420,18 @@
  * images, videos and the bottom of their containers:
  * https://github.com/h5bp/html5-boilerplate/issues/440
  */
-#bkit audio,
-#bkit canvas,
-#bkit iframe,
-#bkit img,
-#bkit svg,
-#bkit video {
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
   vertical-align: middle; }
 
 /*
  * Remove default fieldset styles.
  */
-#bkit fieldset {
+fieldset {
   border: 0;
   margin: 0;
   padding: 0; }
@@ -439,7 +439,7 @@
 /*
  * Allow only vertical resizing of textareas.
  */
-#bkit textarea {
+textarea {
   resize: vertical; }
 
 /* ==========================================================================
@@ -598,7 +598,7 @@
  */
 /* Remove the unwanted box around FAB buttons */
 /* More info: http://goo.gl/IPwKi */
-#bkit a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu,
+a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu,
 .mdl-icon-toggle, .mdl-item, .mdl-radio, .mdl-slider, .mdl-switch, .mdl-tabs__tab {
   -webkit-tap-highlight-color: transparent;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
@@ -614,10 +614,19 @@ html {
   touch-action: manipulation; }
 
 /*
+* Make body take up the entire screen
+* Remove body margin so layout containers don't cause extra overflow.
+*/
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0; }
+
+/*
  * Main display reset for IE support.
  * Source: http://weblog.west-wind.com/posts/2015/Jan/12/main-HTML5-Tag-not-working-in-Internet-Explorer-91011
  */
-#bkit main {
+main {
   display: block; }
 
 /*
@@ -814,20 +823,20 @@ html {
 /* Shadows */
 /* Animations */
 /* Dialog */
-#bkit {
+html, body {
   font-family: "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px; }
 
-#bkit h1, #bkit h2, #bkit h3, #bkit h4, #bkit h5, #bkit h6 {
+h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0; }
 
 /**
   * Styles for HTML elements
   */
-#bkit h1 small, #bkit h2 small, #bkit h3 small, #bkit h4 small, #bkit h5 small, #bkit h6 small {
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
@@ -836,7 +845,7 @@ html {
   opacity: 0.54;
   font-size: 0.6em; }
 
-#bkit h1 {
+h1 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 56px;
   font-weight: 400;
@@ -845,7 +854,7 @@ html {
   margin-top: 24px;
   margin-bottom: 24px; }
 
-#bkit h2 {
+h2 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 45px;
   font-weight: 400;
@@ -853,7 +862,7 @@ html {
   margin-top: 24px;
   margin-bottom: 24px; }
 
-#bkit h3 {
+h3 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 34px;
   font-weight: 400;
@@ -861,7 +870,7 @@ html {
   margin-top: 24px;
   margin-bottom: 24px; }
 
-#bkit h4 {
+h4 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 400;
@@ -870,7 +879,7 @@ html {
   margin-top: 24px;
   margin-bottom: 16px; }
 
-#bkit h5 {
+h5 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 20px;
   font-weight: 500;
@@ -879,7 +888,7 @@ html {
   margin-top: 24px;
   margin-bottom: 16px; }
 
-#bkit h6 {
+h6 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -888,18 +897,18 @@ html {
   margin-top: 24px;
   margin-bottom: 16px; }
 
-#bkit p {
+p {
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0;
   margin-bottom: 16px; }
 
-#bkit a {
+a {
   color: rgb(255,64,129);
   font-weight: 500; }
 
-#bkit blockquote {
+blockquote {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   position: relative;
   font-size: 24px;
@@ -907,28 +916,28 @@ html {
   font-style: italic;
   line-height: 1.35;
   letter-spacing: 0.08em; }
-  #bkit blockquote:before {
+  blockquote:before {
     position: absolute;
     left: -0.5em;
     content: '“'; }
-  #bkit blockquote:after {
+  blockquote:after {
     content: '”';
     margin-left: -0.05em; }
 
-#bkit mark {
+mark {
   background-color: #f4ff81; }
 
-#bkit dt {
+dt {
   font-weight: 700; }
 
-#bkit address {
+address {
   font-size: 12px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0;
   font-style: normal; }
 
-#bkit ul, #bkit ol {
+ul, ol {
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
