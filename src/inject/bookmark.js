@@ -6,7 +6,7 @@ chrome.runtime.sendMessage({}, function(response) {
       // ----------------------------------------------------------
       // This part of the script triggers when page is done loading
       $.ajax({
-          url: chrome.extension.getURL('templates/save_bookmark.html'),
+          url: chrome.extension.getURL('templates/bookmark.html'),
           dataType: 'html'
         })
         .done(function(html) {
