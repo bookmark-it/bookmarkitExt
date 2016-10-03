@@ -41,12 +41,16 @@ function bookmarkFlow(tab) {
 	})
 	.fail(function(error) {
     console.log('error', error);
+    if (error.status === 400) {
+      searchBookmark(tab.url)
+      .then(function(result){
+        chrome.tabs.sendMessage(tab.id, {bookmark: true, data: result});
+      })
+    } else {
+      chrome.tabs.sendMessage(tab.id, {error: true, message: error.statusText});
+    }
 		// if error, send the error to the popin
 		// if exists, send the bookmark info to the popin
-		searchBookmark(tab.url)
-  	.then(function(result){
-  		chrome.tabs.sendMessage(tab.id, {bookmark: true, data: result});
-  	})
 	})
 }
 
