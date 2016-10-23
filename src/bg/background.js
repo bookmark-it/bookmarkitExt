@@ -6,58 +6,43 @@ if (!store.enabled) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.login) {
     login(request.data)
-    .done(function(result) {
-      setAuthentication(result.auth_token);
-      bookmarkFlow(sender.tab);
-    })
+      .done(function(result) {
+        setAuthentication(result.auth_token);
+        bookmarkFlow(sender.tab);
+      })
   }
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-	if (store.get('bk-it_token')) {
-	   bookmarkFlow(tab);
-	} else {
+  if (store.get('bk-it_token')) {
+    bookmarkFlow(tab);
+  } else {
     loginFlow(tab);
-	}
+  }
 });
 
-function setAuthentication(token) {
-  store.set('bk-it_token', token);
-}
-
 function bookmarkFlow(tab) {
-	injectWrapper(tab.id, '/src/inject/bookmark.js');
-  console.log('tab', tab);
-	addBookmark({
-    "title": tab.title,
-    "url": tab.url,
-    "image_url": tab.favIconUrl,
-    "categories": [],
-    "keywords": []
-  })
-	// if success, send the bookmark to the popin
-	.done(function(result) {
-    console.log('result', result);
-		chrome.tabs.sendMessage(tab.id, {bookmark: true, data: result});
-	})
-	.fail(function(error) {
-    console.log('error', error);
-    if (error.status === 400) {
-      searchBookmark(tab.url)
-      .then(function(result){
-        chrome.tabs.sendMessage(tab.id, {bookmark: true, data: result});
-      })
-    } else {
-      chrome.tabs.sendMessage(tab.id, {error: true, message: error.statusText});
-    }
-		// if error, send the error to the popin
-		// if exists, send the bookmark info to the popin
-	})
+  injectWrapper(tab.id, '/src/inject/bookmark.js', function() {
+    addBookmark({
+      "title": tab.title,
+      "url": tab.url,
+      "image_url": tab.favIconUrl,
+      "categories": [],
+      "keywords": []
+    })
+    // if success, send the bookmark to the popin
+    .done(function(result) {
+      chrome.tabs.sendMessage(tab.id, {
+        bookmark: true,
+        data: result
+      });
+    })
+  });
 }
 
 function loginFlow(tab) {
-	injectWrapper(tab.id, '/src/inject/login.js');
-	// send login
-	// if success, bookmarkFlow
-	// if error, send the error to the popin
+  injectWrapper(tab ? tab.id : null, '/src/inject/login.js');
+  // send login
+  // if success, bookmarkFlow
+  // if error, send the error to the popin
 }

@@ -26,7 +26,9 @@
     "persistent": true
   },
   "web_accessible_resources": [
-    "templates/*"
+    "templates/*",
+    "css/*",
+    "js/*"
   ],
   "browser_action": {
     "default_icon": "icons/icon19.png",
@@ -40,6 +42,7 @@
     "activeTab",
     "tabs",
     "storage",
-    "http://bk-it.herokuapp.com/api/*"
+    "http://localhost:8000/api/*",
+    "https://fonts.googleapis.com/*"
   ]
 }

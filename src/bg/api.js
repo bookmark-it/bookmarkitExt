@@ -1,16 +1,6 @@
-var api_url = "http://bk-it.herokuapp.com/api",
-		search_url = "http://bk-it.herokuapp.com/bookmarks/search/",
+var api_url = "http://localhost:8000/api",
     bookmarks_url = api_url + "/bookmarks",
     login_url = api_url + "/auth/login/";
-
-function searchBookmark (url) {
-	return request({
-		url: search_url,
-		data: {
-			"query": url
-		}
-	});
-}
 
 function addBookmark (data) {
 	return request({
