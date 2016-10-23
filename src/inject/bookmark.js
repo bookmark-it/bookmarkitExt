@@ -76,10 +76,25 @@ function deleteCategory(e) {
   }
 }
 
+function addCategory(e) {
+  var $cat = $(e.currentTarget),
+      value = $cat.val();
+
+  if (value) {
+    state.bookmark.categories.push({
+      name: value
+    });
+    render();
+    sendUpdate();
+  }
+}
+
 function bookmarkMain() {
   console.log('bookmark here is your bookmark')
 
   $('#bkit').on('focusout', '.field', update);
 
   $('#bkit').on('click', '.delete', deleteCategory);
+
+  $('#bkit').on('focusout', '.category', addCategory);
 }
