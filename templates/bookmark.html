@@ -37,7 +37,7 @@
           {{# categories }}
           <span class="mdl-chip mdl-chip--deletable">
             <span class="mdl-chip__text">{{ name }}</span>
-            <button type="button" class="mdl-chip__action">
+            <button data-name="{{ name }}" type="button" class="mdl-chip__action delete">
               x
             </button>
           </span>

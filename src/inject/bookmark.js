@@ -48,10 +48,9 @@ function update(e) {
   var $field = $(e.currentTarget),
       name = $field.attr('name'),
       value = $field.val();
-  if (state.bookmark) {
-    state.bookmark[name] = value;
-    sendUpdate();
-  }
+
+  state.bookmark[name] = value;
+  sendUpdate();
 }
 
 function sendUpdate() {
@@ -61,8 +60,26 @@ function sendUpdate() {
   });
 }
 
+function deleteCategory(e) {
+  var $cat = $(e.currentTarget),
+      name = $cat.data('name'),
+      categories = state.bookmark.categories,
+      catetogy = null;
+
+  for (index in categories) {
+    if (categories[index].name === name) {
+        state.bookmark.categories.splice(index, 1);
+        render();
+        sendUpdate();
+      return ;
+    }
+  }
+}
+
 function bookmarkMain() {
   console.log('bookmark here is your bookmark')
 
   $('#bkit').on('focusout', '.field', update);
+
+  $('#bkit').on('click', '.delete', deleteCategory);
 }
