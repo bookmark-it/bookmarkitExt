@@ -8,3 +8,18 @@
   height: 100px;
   margin-top: 45px;
 }
+
+#bkit .bookmark .header {
+  background-color: #009690;
+  color: #FFFFFF;
+  padding: 10px;
+}
+#bkit .bookmark .header h1 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#bkit .bookmark .mdl-card__title {
+  display: inline-block;
+  flex-grow: inherit;
+}
