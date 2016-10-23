@@ -10,6 +10,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         setAuthentication(result.auth_token);
         bookmarkFlow(sender.tab);
       })
+  } else if (request.bookmark_update) {
+    updateBookmark(request.data)
   }
 });
 
@@ -22,22 +24,26 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 function bookmarkFlow(tab) {
-  injectWrapper(tab.id, '/src/inject/bookmark.js', function() {
-    addBookmark({
-      "title": tab.title,
-      "url": tab.url,
-      "image_url": tab.favIconUrl,
-      "categories": [],
-      "keywords": []
-    })
-    // if success, send the bookmark to the popin
-    .done(function(result) {
-      chrome.tabs.sendMessage(tab.id, {
-        bookmark: true,
-        data: result
-      });
-    })
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.loaded) {
+      addBookmark({
+        "title": tab.title,
+        "url": tab.url,
+        "image_url": tab.favIconUrl,
+        "categories": [],
+        "keywords": []
+      })
+      // if success, send the bookmark to the popin
+      .done(function(result) {
+        chrome.tabs.sendMessage(tab.id, {
+          bookmark: true,
+          data: result
+        });
+      })
+    }
   });
+
+  injectWrapper(tab.id, '/src/inject/bookmark.js');
 }
 
 function loginFlow(tab) {
