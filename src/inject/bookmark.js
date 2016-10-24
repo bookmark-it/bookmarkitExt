@@ -7,6 +7,7 @@ var template = '',
 
 function render() {
   bkit_renderTemplate(root, template, state);
+  bookmarkMain();
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -60,10 +61,16 @@ function sendUpdate() {
   });
 }
 
-function deleteCategory(e) {
-  var $cat = $(e.currentTarget),
-      name = $cat.data('name'),
-      categories = state.bookmark.categories,
+function addCategory(name) {
+  state.bookmark.categories.push({
+    name: name
+  });
+  render();
+  sendUpdate();
+}
+
+function deleteCategory(name) {
+  var categories = state.bookmark.categories,
       catetogy = null;
 
   for (index in categories) {
@@ -76,25 +83,18 @@ function deleteCategory(e) {
   }
 }
 
-function addCategory(e) {
-  var $cat = $(e.currentTarget),
-      value = $cat.val();
-
-  if (value) {
-    state.bookmark.categories.push({
-      name: value
-    });
-    render();
-    sendUpdate();
-  }
-}
-
 function bookmarkMain() {
-  console.log('bookmark here is your bookmark')
-
   $('#bkit').on('focusout', '.field', update);
 
-  $('#bkit').on('click', '.delete', deleteCategory);
+  $('#bkit .categories').tagsinput();
 
-  $('#bkit').on('focusout', '.category', addCategory);
+  $('#bkit .bootstrap-tagsinput input').attr('size', 5);
+
+  $('#bkit .categories').on('itemAdded', function(event) {
+    addCategory(event.item);
+  });
+
+  $('#bkit .categories').on('itemRemoved', function(event) {
+    deleteCategory(event.item);
+  });
 }

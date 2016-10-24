@@ -1,13 +1,16 @@
 function injectWrapper(tabId, file, callback) {
   chrome.tabs.insertCSS(tabId, { file: "/css/material.css" }, function() {
-    chrome.tabs.insertCSS(tabId, { file: "/css/login.css" }, function() {});
+    chrome.tabs.insertCSS(tabId, { file: "/css/bootstrap-tagsinput.css" });
+    chrome.tabs.insertCSS(tabId, { file: "/css/login.css" });
     chrome.tabs.insertCSS(tabId, { file: "/css/bookmark.css" });
     chrome.tabs.insertCSS(tabId, { file: "/css/shared.css" }, function() {
       chrome.tabs.executeScript(tabId, { file: "/js/jquery.min.js" }, function() {
-        chrome.tabs.executeScript(tabId, { file: "/js/material.min.js" }, function() {
-          chrome.tabs.executeScript(tabId, { file: "/js/hogan.min.js" }, function() {
-            chrome.tabs.executeScript(tabId, { file: "/src/inject/utils.js" }, function() {
-              chrome.tabs.executeScript(tabId, { file: file }, callback);
+        chrome.tabs.executeScript(tabId, { file: "/js/bootstrap-tagsinput.min.js" }, function() {
+          chrome.tabs.executeScript(tabId, { file: "/js/material.min.js" }, function() {
+            chrome.tabs.executeScript(tabId, { file: "/js/hogan.min.js" }, function() {
+              chrome.tabs.executeScript(tabId, { file: "/src/inject/utils.js" }, function() {
+                chrome.tabs.executeScript(tabId, { file: file }, callback);
+              });
             });
           });
         });
