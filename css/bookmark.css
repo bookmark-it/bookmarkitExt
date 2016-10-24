@@ -44,23 +44,33 @@
   margin-top: 10px;
 }
 #bkit .bookmark .mdl-card__supporting-text input {
-  width: 100%;
+  width: 95%;
   font-size: 24px;
   font-weight: lighter;
   border: none;
   text-overflow: ellipsis;
+  padding: 0 6px;
 }
-#bkit .bookmark .mdl-card__supporting-text input:hover:not(:focus) {
+#bkit .bookmark .mdl-card__supporting-text input:hover:not(:focus),
+#bkit .bookmark .bootstrap-tagsinput:hover:not(.focus) {
   background-color: rgba(0, 150, 144, 0.2);
 }
-#bkit .bookmark .mdl-card__supporting-text input:focus {
+#bkit .bookmark .mdl-card__supporting-text input:focus,
+#bkit .bookmark .bootstrap-tagsinput.focus {
   border: 1px solid rgba(0, 150, 144, 0.2);
   outline: none;
+  margin: -1px;
+}
+#bkit .bookmark .mdl-card__supporting-text input:not(:first-child):focus,
+#bkit .bookmark .bootstrap-tagsinput.focus {
+  margin-top: 9px;
 }
 
 #bkit .bookmark .bootstrap-tagsinput {
   margin-top: 10px;
   width: 95%;
+  border: none;
+  box-shadow: none;
 }
 #bkit .bookmark .bootstrap-tagsinput .tag {
   padding: 4px 8px;
