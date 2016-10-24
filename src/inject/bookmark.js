@@ -92,6 +92,7 @@ function bookmarkMain() {
 
   $('#bkit .categories').on('itemAdded', function(event) {
     addCategory(event.item);
+    $('#bkit .bootstrap-tagsinput input').click();
   });
 
   $('#bkit .categories').on('itemRemoved', function(event) {

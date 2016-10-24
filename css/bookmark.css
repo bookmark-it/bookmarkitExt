@@ -31,6 +31,7 @@
 }
 #bkit .bookmark .header .menu-wrapper .mdl-menu__item a {
   text-decoration: none;
+  color: #000000;
 }
 #bkit .bookmark .header .menu-wrapper button {
   line-height: inherit;
@@ -84,35 +85,4 @@
   height: 24px;
   margin-top: 0 !important;
   font-size: 14px;
-}
-
-#bkit .bookmark .categories-wrapper {
-  margin-top: 10px;
-  display: flex;
-}
-#bkit .bookmark .categories-wrapper .mdl-chip:not(:first-child) {
-  margin-left: 5px;
-}
-#bkit .bookmark .categories-wrapper .mdl-chip {
-  height: 24px;
-  line-height: 24px;
-}
-#bkit .bookmark .categories-wrapper .mdl-chip__action {
-  margin-left: 0;
-}
-#bkit .bookmark .categories-wrapper input.category {
-  margin: 2px 0 2px 10px;
-  margin-left: 10px;
-  height: 24px;
-  line-height: 24px;
-  font-size: 16px;
-}
-#bkit .bookmark .categories-wrapper input.category.empty {
-  margin-left: 0;
-}
-#bkit .bookmark .categories-wrapper input.category:focus {
-  border: none;
-}
-#bkit .bookmark .categories-wrapper input.category:hover {
-  background-color: inherit;
 }
