@@ -1,6 +1,6 @@
 {
   "name": "BookmarkIt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description": "Add bookmarks to bk-it.herokuapp.com",
   "homepage_url": "https://github.com/julienR2",
@@ -42,7 +42,7 @@
     "activeTab",
     "tabs",
     "storage",
-    "http://localhost:8000/api/*",
+    "http://bk-it.herokuapp.com/api/*",
     "https://fonts.googleapis.com/*"
   ]
 }

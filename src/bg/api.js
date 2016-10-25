@@ -1,4 +1,4 @@
-var api_url = "http://localhost:8000/api",
+var api_url = "http://bk-it.herokuapp.com/api",
     bookmarks_url = api_url + "/bookmarks",
     login_url = api_url + "/auth/login/";
 
