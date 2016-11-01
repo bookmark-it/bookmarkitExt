@@ -1,5 +1,5 @@
 function injectWrapper(tabId, file, callback) {
-  chrome.tabs.insertCSS(tabId, { file: "/css/material.css" }, function() {
+  chrome.tabs.insertCSS(tabId, { file: "/css/material.min.css" }, function() {
     chrome.tabs.insertCSS(tabId, { file: "/css/bootstrap-tagsinput.css" });
     chrome.tabs.insertCSS(tabId, { file: "/css/login.css" });
     chrome.tabs.insertCSS(tabId, { file: "/css/bookmark.css" });
