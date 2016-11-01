@@ -18,32 +18,32 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
-chrome.runtime.sendMessage({}, function(response) {
+chrome.runtime.sendMessage(null, null, null, function(response) {
+  var readyStateCheckInterval = setInterval(function() {
+    if (document.readyState === "complete") {
+      clearInterval(readyStateCheckInterval);
+
+      // ----------------------------------------------------------
+      // This part of the script triggers when page is done loading
+      root = bkit_init();
+
+      $.ajax({
+        url: chrome.extension.getURL('/templates/bookmark.html'),
+        dataType: 'html'
+      })
+      .done(function(html) {
+        chrome.runtime.sendMessage({loaded: true});
+
+        template = Hogan.compile(html);
+
+        render();
+
+        bookmarkMain();
+      });
+      // ----------------------------------------------------------
+    }
+  }, 10);
 });
-var readyStateCheckInterval = setInterval(function() {
-  if (document.readyState === "complete") {
-    clearInterval(readyStateCheckInterval);
-
-    // ----------------------------------------------------------
-    // This part of the script triggers when page is done loading
-    root = bkit_init();
-
-    $.ajax({
-      url: chrome.extension.getURL('/templates/bookmark.html'),
-      dataType: 'html'
-    })
-    .done(function(html) {
-      chrome.runtime.sendMessage({loaded: true});
-
-      template = Hogan.compile(html);
-
-      render();
-
-      bookmarkMain();
-    });
-    // ----------------------------------------------------------
-  }
-}, 10);
 
 function update(e) {
   var $field = $(e.currentTarget),
@@ -71,7 +71,8 @@ function addCategory(name) {
 
 function deleteCategory(name) {
   var categories = state.bookmark.categories,
-      catetogy = null;
+      catetogy = null,
+      index = null;
 
   for (index in categories) {
     if (categories[index].name === name) {

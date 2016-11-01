@@ -23,7 +23,7 @@
       "src/bg/api.js",
       "src/bg/background.js"
     ],
-    "persistent": true
+    "persistent": false
   },
   "web_accessible_resources": [
     "templates/*",
@@ -31,6 +31,7 @@
     "js/*"
   ],
   "browser_action": {
+    "browser_style": true,
     "default_icon": "icons/icon19.png",
     "default_title": "BookmarkIt!"
   },
@@ -42,7 +43,7 @@
     "activeTab",
     "tabs",
     "storage",
-    "http://bk-it.herokuapp.com/api/*",
+    "*://bk-it.herokuapp.com/api/*",
     "https://fonts.googleapis.com/*"
   ]
 }
