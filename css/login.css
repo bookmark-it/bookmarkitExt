@@ -1,10 +1,10 @@
-#bkit .login .mdl-card__title,
-#bkit .login .mdl-card__actions {
+#bk-it .login .mdl-card__title,
+#bk-it .login .mdl-card__actions {
   display: block;
   text-align: center;
 }
 
-#bkit .login .mdl-spinner {
+#bk-it .login .mdl-spinner {
   margin-top: 10px;
   text-align: center;
 }

@@ -6,8 +6,8 @@ function bkit_renderTemplate (root, template, state) {
 
 function bkit_init (root) {
   var wrapper = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">' +
-                '<div id="bkit"></div>';
+                '<div id="bk-it"></div>';
   $('body').append(wrapper);
 
-  return $('#bkit');
+  return $('#bk-it');
 }

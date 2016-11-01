@@ -43,7 +43,7 @@ chrome.runtime.sendMessage(null, null, null, function(response) {
 });
 
 function loginMain() {
-  $('#bkit form').submit(function(e) {
+  $('#bk-it form').submit(function(e) {
     e.preventDefault();
 
     state.username = $(this).find('[name=username]').val();

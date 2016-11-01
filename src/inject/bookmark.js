@@ -85,18 +85,18 @@ function deleteCategory(name) {
 }
 
 function bookmarkMain() {
-  $('#bkit').on('focusout', '.field', update);
+  $('#bk-it').on('focusout', '.field', update);
 
-  $('#bkit .categories').tagsinput();
+  $('#bk-it .categories').tagsinput();
 
-  $('#bkit .bootstrap-tagsinput input').attr('size', 5);
+  $('#bk-it .bootstrap-tagsinput input').attr('size', 5);
 
-  $('#bkit .categories').on('itemAdded', function(event) {
+  $('#bk-it .categories').on('itemAdded', function(event) {
     addCategory(event.item);
-    $('#bkit .bootstrap-tagsinput input').click();
+    $('#bk-it .bootstrap-tagsinput input').click();
   });
 
-  $('#bkit .categories').on('itemRemoved', function(event) {
+  $('#bk-it .categories').on('itemRemoved', function(event) {
     deleteCategory(event.item);
   });
 }
