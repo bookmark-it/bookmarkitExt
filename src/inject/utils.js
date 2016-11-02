@@ -11,3 +11,19 @@ function bkit_init (root) {
 
   return $('#bk-it');
 }
+
+function destroyPopup () {
+  $('#bk-it').remove();
+}
+
+function removeOnInactive() {
+  var timeOut = null;
+
+  $("#bk-it").mouseenter(function(){
+    clearTimeout(timeOut);
+  })
+
+  $("#bk-it").mouseleave(function(){
+    timeOut = setTimeout(destroyPopup, 3000);
+  });
+}

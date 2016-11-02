@@ -43,6 +43,8 @@ chrome.runtime.sendMessage(null, null, null, function(response) {
 });
 
 function loginMain() {
+  removeOnInactive();
+
   $('#bk-it form').submit(function(e) {
     e.preventDefault();
 

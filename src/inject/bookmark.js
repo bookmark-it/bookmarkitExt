@@ -85,6 +85,8 @@ function deleteCategory(name) {
 }
 
 function bookmarkMain() {
+  removeOnInactive();
+  
   $('#bk-it').on('focusout', '.field', update);
 
   $('#bk-it .categories').tagsinput();

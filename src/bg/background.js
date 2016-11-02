@@ -4,6 +4,9 @@ if (!store.enabled) {
 
 //example of using a message handler from the inject scripts
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (!request) {
+    return;
+  }
   if (request.login) {
     login(request.data)
       .done(function(result) {
@@ -25,6 +28,9 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 function bookmarkFlow(tab) {
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (!request) {
+      return;
+    }
     if (request.loaded) {
       addBookmark({
         "title": tab.title,
