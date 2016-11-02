@@ -8,11 +8,13 @@ var template = '',
 
 function render() {
   bkit_renderTemplate(root, template, state);
+  loginMain();
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.logged) {
+  if (request.logged || request.error) {
     state['loading'] =  false;
+    render();
   }
 });
 
@@ -43,7 +45,7 @@ chrome.runtime.sendMessage(null, null, null, function(response) {
 });
 
 function loginMain() {
-  removeOnInactive();
+  $('#bk-it .close').on('click', destroyPopup);
 
   $('#bk-it form').submit(function(e) {
     e.preventDefault();

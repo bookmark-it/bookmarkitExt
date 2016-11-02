@@ -13,6 +13,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         setAuthentication(result.auth_token);
         bookmarkFlow(sender.tab);
       })
+      .fail(function(error) {
+        chrome.tabs.sendMessage(sender.tab.id, {
+          error: true,
+          data: error
+        });
+        return;
+      })
   } else if (request.bookmark_update) {
     updateBookmark(request.data)
   }

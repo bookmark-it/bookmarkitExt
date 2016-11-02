@@ -39,8 +39,6 @@
   color: #FFFFFF;
 }
 
-#bk-it .bookmark .mdl-card__supporting-text {
-}
 #bk-it .bookmark .mdl-card__supporting-text input:not(:first-child) {
   margin-top: 10px;
 }

@@ -8,3 +8,15 @@
   margin-top: 10px;
   text-align: center;
 }
+
+#bk-it .login .close {
+  right: 0;
+  width: 30px;
+  padding: 0;
+  min-width: inherit;
+  position: absolute;
+}
+
+#bk-it .login .mdl-card__supporting-text {
+  width: 100%;
+}

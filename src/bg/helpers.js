@@ -47,6 +47,8 @@ function request(options) {
       if (error.status === 401) {
         removeAuthentication();
         loginFlow();
+      } else {
+        return error;
       }
     });
 }
