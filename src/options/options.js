@@ -11,8 +11,6 @@ $('#logout').click(function(){
   disableLogout();
 })
 
-chrome.storage.local.get('bk-it_token', function(token) {
-  if (!token['bk-it_token']) {
-    disableLogout();
-  }
-});
+if (!store.get('bk-it_token')) {
+  disableLogout();
+}
