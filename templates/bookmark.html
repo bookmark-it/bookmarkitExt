@@ -5,35 +5,38 @@
     {{# bookmark }}
       <div class="mdl-card__title mdl-card--expand header">
         <h1 class="mdl-card__title-text">Bookmark!t</h1>
-        <span class="fill"></span>
-        <div class="menu-wrapper">
-          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="menu">
-            <li class="mdl-menu__item">
-              Remove
-            </li>
-            <li class="mdl-menu__item">
-              <a href="#" target="_blank">
-                Open in Bk-it
-              </a>
-            </li>
-            <li class="mdl-menu__item">
-              <a href="#" target="_blank">
+        {{^ removed }}
+          <span class="fill"></span>
+          <div class="menu-wrapper">
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu" for="menu">
+              <li class="mdl-menu__item remove">
+                Remove
+              </li>
+              <li class="mdl-menu__item">
+                <a href="http://bk-it.herokuapp.com/bookmarks/{{ bookmark.id }}" target="_blank">
+                  Open in Bk-it
+                </a>
+              </li>
+              <li class="mdl-menu__item settings">
                 Settings
-              </a>
-            </li>
-            <li class="mdl-menu__item">
-              <a href="#" target="_blank">
+              </li>
+              <li class="mdl-menu__item logout">
                 LogOut
-              </a>
-            </li>
-          </ul>
-          <button id="menu" class="mdl-button">Menu</button>
-        </div>
+              </li>
+            </ul>
+            <button id="menu" class="mdl-button">Menu</button>
+          </div>
+        {{/ removed }}
       </div>
       <div class="mdl-card__supporting-text">
-        <input class="field" type="text" name="title" placeholder="Title..." value="{{ title }}" />
-        <input class="field" type="text" name="description" placeholder="Description..." value="{{ description }}" />
-        <input class="categories" type="text" value="{{# categories}}{{name}},{{/ categories}}" data-role="tagsinput" />
+        {{^ removed }}
+          <input class="field" type="text" name="title" placeholder="Title..." value="{{ title }}" />
+          <input class="field" type="text" name="description" placeholder="Description..." value="{{ description }}" />
+          <input class="categories" type="text" value="{{# categories}}{{name}},{{/ categories}}" data-role="tagsinput" />
+        {{/ removed }}
+        {{# removed }}
+          <h3 class="mdl-card__title-text">Bookmark removed !</h3>
+        {{/ removed }}
       </div>
     {{/ bookmark }}
   {{/ loading }}

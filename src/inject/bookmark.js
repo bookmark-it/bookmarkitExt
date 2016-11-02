@@ -1,7 +1,8 @@
 var template = '',
     state = {
       loading: true,
-      bookmark: null
+      bookmark: null,
+      removed: false
     },
     root = null;
 
@@ -14,6 +15,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.bookmark) {
     state['loading'] =  false;
     state['bookmark'] = request.data;
+    render();
+  } else if (request.bookmark_removed) {
+    state['loading'] =  false;
+    state['removed'] = true;
     render();
   }
 });
@@ -61,6 +66,27 @@ function sendUpdate() {
   });
 }
 
+function callSettings() {
+  chrome.runtime.sendMessage({
+    settings: true
+  });
+}
+
+function callLogout() {
+  chrome.runtime.sendMessage({
+    logout: true
+  });
+}
+
+function removeBookmark () {
+  state['loading'] =  true;
+  render();
+  chrome.runtime.sendMessage({
+    bookmark_remove: true,
+    data: state.bookmark
+  });
+}
+
 function addCategory(name) {
   state.bookmark.categories.push({
     name: name
@@ -86,7 +112,7 @@ function deleteCategory(name) {
 
 function bookmarkMain() {
   removeOnInactive();
-  
+
   $('#bk-it').on('focusout', '.field', update);
 
   $('#bk-it .categories').tagsinput();
@@ -101,4 +127,9 @@ function bookmarkMain() {
   $('#bk-it .categories').on('itemRemoved', function(event) {
     deleteCategory(event.item);
   });
+
+  // ------- menu -------
+  $('#bk-it .menu-wrapper .remove').click(removeBookmark);
+  $('#bk-it .menu-wrapper .settings').click(callSettings);
+  $('#bk-it .menu-wrapper .logout').click(callLogout)
 }

@@ -21,7 +21,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         return;
       })
   } else if (request.bookmark_update) {
-    updateBookmark(request.data)
+    updateBookmark(request.data);
+  } else if (request.bookmark_remove) {
+    deleteBookmark(request.data)
+      .done(function(result) {
+        chrome.tabs.sendMessage(sender.tab.id, {
+          bookmark_removed: true
+        });
+      });
+  } else if (request.settings) {
+    chrome.runtime.openOptionsPage();
+  } else if (request.logout) {
+    removeAuthentication();
+    loginFlow(sender.tab);
   }
 });
 
