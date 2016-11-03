@@ -18,31 +18,29 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
-chrome.runtime.sendMessage(null, null, null, function(response) {
-  var readyStateCheckInterval = setInterval(function() {
-    if (document.readyState === "complete") {
-      clearInterval(readyStateCheckInterval);
+var readyStateCheckInterval = setInterval(function() {
+  if (document.readyState === "complete") {
+    clearInterval(readyStateCheckInterval);
 
-      // ----------------------------------------------------------
-      // This part of the script triggers when page is done loading
-      root = bkit_init();
+    // ----------------------------------------------------------
+    // This part of the script triggers when page is done loading
+    root = bkit_init();
 
-      $.ajax({
-          url: chrome.extension.getURL('/templates/login.html'),
-          dataType: 'html'
-        })
-        .done(function(html) {
-          template = Hogan.compile(html);
+    $.ajax({
+        url: chrome.extension.getURL('/templates/login.html'),
+        dataType: 'html'
+      })
+      .done(function(html) {
+        template = Hogan.compile(html);
 
-          render();
+        render();
 
-          loginMain();
-        });
-      // ----------------------------------------------------------
+        loginMain();
+      });
+    // ----------------------------------------------------------
 
-    }
-  }, 10);
-});
+  }
+}, 10);
 
 function loginMain() {
   $('#bk-it .close').on('click', destroyPopup);
