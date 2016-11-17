@@ -54,7 +54,7 @@ function bookmarkFlow(tab) {
       addBookmark({
         "title": tab.title,
         "url": tab.url,
-        "image_url": tab.favIconUrl,
+        "favicon_url": tab.favIconUrl,
         "categories": [],
         "keywords": []
       })
