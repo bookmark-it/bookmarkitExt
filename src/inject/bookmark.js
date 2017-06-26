@@ -16,6 +16,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     state['loading'] =  false;
     state['bookmark'] = request.data;
     render();
+    getImage();
   } else if (request.bookmark_removed) {
     state['loading'] =  false;
     state['removed'] = true;
@@ -105,6 +106,15 @@ function deleteCategory(name) {
         sendUpdate();
       return ;
     }
+  }
+}
+
+function getImage() {
+  var images = $('img');
+
+  if (images.length > 0) {
+    state.bookmark.image_url = images.get()[0].src;
+    sendUpdate();
   }
 }
 
